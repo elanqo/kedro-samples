@@ -1,0 +1,51 @@
+metadata:
+  version: 1
+
+sources:
+  reviews:
+    args:
+      urlpath: data/01_raw/reviews.csv
+    driver: csv
+    description: "A log of company reviews"
+    
+  reviews_object:
+    args:
+      urlpath: data/01_raw/reviews.csv
+    driver: csv
+    description: "A log of company reviews, return Intake object that can be read in different ways such as `read_chunked()`"
+    metadata:
+      kedro:
+        load_obj: True
+
+  companies:
+    driver: csv
+    args:
+        urlpath: data/01_raw/companies.csv
+
+  shuttles:
+    driver: excel
+    args:
+        urlpath: data/01_raw/shuttles.xlsx
+    load_args:
+      engine: openpyxl # Use modern Excel engine, it is the default since Kedro 0.18.0
+
+  preprocessed_companies:
+    driver: parquet
+    args:
+        urlpath: data/02_intermediate/preprocessed_companies.pq
+
+  preprocessed_shuttles:
+    driver: parquet
+    args:
+        urlpath: data/02_intermediate/preprocessed_shuttles.pq
+
+  model_input_table:
+    driver: parquet
+    args:
+        urlpath: data/03_primary/model_input_table.pq
+
+  #regressor:
+  #  driver: sklearn
+  #  args:
+  #      urlpath: data/06_models/regressor.pickle
+  #  versioned: true
